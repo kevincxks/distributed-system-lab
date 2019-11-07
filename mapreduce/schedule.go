@@ -44,6 +44,7 @@ func (mr *Master) schedule(phase jobPhase) {
 		tmpWorker := <-mr.registerChannel
 		go func(tmp string, args *DoTaskArgs, wg *sync.WaitGroup) {
 			call(tmp, "Worker.DoTask", args, new(struct{}))
+			mr.registerChannel <- tmp
 			wg.Done()
 		}(tmpWorker, &taskArgs, &wg)
 	}
