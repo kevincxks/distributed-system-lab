@@ -42,10 +42,10 @@ func (mr *Master) schedule(phase jobPhase) {
 			taskArgs.NumOtherPhase = len(mr.files)
 		}
 		tmpWorker := <-mr.registerChannel
-		go func(tmp string, args *DoTaskArgs) {
+		go func(tmp string, args *DoTaskArgs, wg *sync.WaitGroup) {
 			call(tmp, "Worker.DoTask", args, new(struct{}))
 			wg.Done()
-		}(tmpWorker, &taskArgs)
+		}(tmpWorker, &taskArgs, &wg)
 	}
 	wg.Wait()
 	fmt.Printf("Schedule: %v phase done\n", phase)
