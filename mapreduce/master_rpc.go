@@ -22,9 +22,9 @@ func (mr *Master) Shutdown(_, _ *struct{}) error {
 // startServer是开启master rpc服务。不断的接受来自worker的rpc调用。
 func (mr *Master) startRPCServer() {
 	rpcs := rpc.NewServer()
-	rpcs.Register(mr) // 注册自己的方法
-	os.Remove(mr.address) // only needed for "unix"
-	l, e := net.Listen("unix", mr.address)  // unix套接字，套接字和文件绑定
+	rpcs.Register(mr)                      // 注册自己的方法
+	os.Remove(mr.address)                  // only needed for "unix"
+	l, e := net.Listen("unix", mr.address) // unix套接字，套接字和文件绑定
 	if e != nil {
 		log.Fatal("RegstrationServer", mr.address, " error: ", e)
 	}
