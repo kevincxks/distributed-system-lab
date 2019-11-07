@@ -47,7 +47,7 @@ func newMaster(master string) (mr *Master) {
 	mr = new(Master)
 	mr.address = master
 	mr.shutdown = make(chan struct{})
-	mr.registerChannel = make(chan string)
+	mr.registerChannel = make(chan string, 10)
 	mr.doneChannel = make(chan bool)
 	return
 }
