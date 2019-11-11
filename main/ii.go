@@ -65,6 +65,7 @@ func reduceF(key string, values []string) string {
 	for _, ch := range tmpCount {
 		doc = append(doc, ch.Key)
 	}
+	sort.Strings(doc)
 	return key + ": " + strconv.Itoa(len(tmpCount)) + " " + strings.Join(doc, ",")
 
 
