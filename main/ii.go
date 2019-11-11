@@ -28,7 +28,7 @@ func mapF(document string, value string) (res []mapreduce.KeyValue) {
 		})
 	}
 	return res
-	
+
 	// TODO: you should complete this to do the inverted index challenge
 }
 
@@ -36,13 +36,13 @@ func mapF(document string, value string) (res []mapreduce.KeyValue) {
 // list of that key's string value (merged across all inputs). The return value
 // should be a single output value for that key.
 type Pair struct {
-	Key string
+	Key   string
 	Count int
 }
 type PairList []Pair
 
-func (p PairList) Len() int {return len(p)}
-func (p PairList) Swap(i, j int) { p[i], p[j] = p[j], p[i]}
+func (p PairList) Len() int           { return len(p) }
+func (p PairList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 func (p PairList) Less(i, j int) bool { return p[i].Count > p[j].Count }
 func reduceF(key string, values []string) string {
 	tmpMap := make(map[string]int)
@@ -60,15 +60,14 @@ func reduceF(key string, values []string) string {
 			Count: v,
 		})
 	}
-	sort.Sort(PairList(tmpCount))
 	doc := make([]string, 0)
 	for _, ch := range tmpCount {
 		doc = append(doc, ch.Key)
 	}
 	sort.Strings(doc)
-	return key + ": " + strconv.Itoa(len(tmpCount)) + " " + strings.Join(doc, ",")
 
 
+	return strconv.Itoa(len(tmpCount)) + " " + strings.Join(doc, ",")
 
 	// TODO: you should complete this to do the inverted index challenge
 }
